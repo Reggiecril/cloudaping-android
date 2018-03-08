@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -58,15 +59,18 @@ public class MainActivity extends AppCompatActivity
         inflater.inflate(R.menu.menu_search,menu);
         MenuItem item=menu.findItem(R.id.action_search);
         SearchView searchView=(SearchView)item.getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            TextView textView=(TextView)findViewById(R.id.cloudaping);
+
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                return true;
             }
         });
         return super.onCreateOptionsMenu(menu);

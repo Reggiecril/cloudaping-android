@@ -8,38 +8,50 @@
     tools:context="com.cloudaping.cloudaping_android.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="97dp"
-        android:layout_height="82dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="268dp"
-        android:layout_marginTop="340dp"
-        android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="97dp"
-        android:layout_height="82dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="278dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="340dp"
-        android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="336dp"
+        app:cardCornerRadius="2dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="97dp"
-        android:layout_height="82dp"
-        android:layout_marginLeft="144dp"
-        android:layout_marginTop="340dp"
-        android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="97dp"
+            android:layout_height="82dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="340dp"
+            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.972"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="97dp"
+            android:layout_height="82dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="340dp"
+            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="97dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="340dp"
+            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
+            app:layout_constraintEnd_toStartOf="@+id/button3"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintStart_toEndOf="@+id/button2"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="278dp"

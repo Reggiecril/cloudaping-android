@@ -20,7 +20,6 @@
             app:navigationIcon="@drawable/ic_menu_black_36dp">
             app:theme="@style/AppTheme.AppBarOverlay"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
