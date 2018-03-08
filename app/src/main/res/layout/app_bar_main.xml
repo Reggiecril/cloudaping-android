@@ -20,6 +20,7 @@
             app:navigationIcon="@drawable/ic_menu_black_36dp">
             app:theme="@style/AppTheme.AppBarOverlay"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+
             <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,12 +35,16 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
     <include
         layout="@layout/content_main"
         android:layout_width="match_parent"
-        android:layout_height="507dp"
-        tools:layout_editor_absoluteY="60dp" />
-
+        android:layout_height="match_parent"/>
+    </ScrollView>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
