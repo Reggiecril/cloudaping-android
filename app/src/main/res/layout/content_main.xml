@@ -14,78 +14,83 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="191dp"
-        android:layout_marginTop="276dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="285dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:cardCornerRadius="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
+
+        <ImageButton
             android:id="@+id/button2"
-            android:layout_width="97dp"
-            android:layout_height="82dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="8dp"
-            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
+            android:layout_marginTop="5dp"
+            android:scaleType="centerInside"
+            android:elevation="10dp"
+            android:background="@drawable/rounded_corners_imagebutton"
+            app:srcCompat="@drawable/laptop" />
+        <ImageButton
             android:id="@+id/button"
-            android:layout_width="97dp"
-            android:layout_height="82dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/rounded_corners_imagebutton"
             android:layout_marginLeft="148dp"
-            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
-            app:layout_constraintHorizontal_bias="0.506"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:elevation="10dp"
+            app:srcCompat="@drawable/iphonexdesign" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button3"
-            android:layout_width="97dp"
-            android:layout_height="82dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="288dp"
-            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="5dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/rounded_corners_imagebutton"
+            android:elevation="10dp"
+            app:srcCompat="@drawable/camera"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/button6"
-            android:layout_width="97dp"
-            android:layout_height="82dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="108dp"
-            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="115dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/rounded_corners_imagebutton"
+            android:elevation="10dp"
+            app:srcCompat="@drawable/computer"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/button5"
-            android:layout_width="97dp"
-            android:layout_height="82dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="148dp"
-            android:layout_marginTop="108dp"
-            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="115dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_corners_imagebutton"
+            android:elevation="10dp"
+            app:srcCompat="@drawable/x_box"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/button4"
-            android:layout_width="97dp"
-            android:layout_height="82dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="288dp"
-            android:layout_marginTop="108dp"
-            android:background="@drawable/d7e5ee71fa9452b10dbcda80c0b5f3c4"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="115dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_corners_imagebutton"
+            android:elevation="10dp"
+            app:srcCompat="@drawable/headset"/>
 
 
     </android.support.v7.widget.CardView>
 
-    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
