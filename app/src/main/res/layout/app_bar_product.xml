@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cloudaping.cloudaping_android.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:context="com.cloudaping.cloudaping_android.ProductActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,26 +21,18 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="CloudaPing"
-            android:fontFamily="@font/playball"
-            android:textColor="@color/colorOrigin"
-            android:id="@+id/cloudaping"
-            android:textSize="24sp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="CloudaPing"
+                android:fontFamily="@font/playball"
+                android:textColor="@color/colorOrigin"
+                android:id="@+id/cloudaping"
+                android:textSize="24sp" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:fillViewport="true">
-        <include
-            layout="@layout/content_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </ScrollView>
+    <include layout="@layout/content_product" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
