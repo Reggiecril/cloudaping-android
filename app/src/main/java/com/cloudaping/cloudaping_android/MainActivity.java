@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
         viewPager.setAdapter(viewPagerAdapter);
         setupLaunchButton();
     }
+
     private void setupLaunchButton(){
         ImageButton button1=(ImageButton) findViewById(R.id.button);
         button1.setOnClickListener(new View.OnClickListener(){
@@ -54,7 +55,16 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        ImageButton button2=(ImageButton) findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent1=new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent1);
+            }
+        });
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main_layout);
