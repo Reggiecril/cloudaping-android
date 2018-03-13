@@ -26,6 +26,7 @@ import java.net.URLEncoder;
 
 public class LoginActivity extends AppCompatActivity  {
     EditText UsernameEt, PasswordEt;
+    Button register;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,14 @@ public class LoginActivity extends AppCompatActivity  {
 
         UsernameEt = (EditText)findViewById(R.id.txtEmail);
         PasswordEt = (EditText)findViewById(R.id.txtPassword);
+        register=findViewById(R.id.btnSignUp);
+        register.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -54,10 +63,6 @@ public class LoginActivity extends AppCompatActivity  {
         String type = "login";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username, password);
-    }
-    public void OnRegister(){
-        Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
-        startActivity(intent);
     }
     @Override
     public void onBackPressed() {
@@ -122,8 +127,7 @@ public class LoginActivity extends AppCompatActivity  {
         protected void onPostExecute(String result) {
             alertDialog.setMessage(result);
             alertDialog.show();
-            Intent intent=new Intent(LoginActivity.this,ProductActivity.class);
-            startActivity(intent);
+            onBackPressed();
         }
 
         @Override

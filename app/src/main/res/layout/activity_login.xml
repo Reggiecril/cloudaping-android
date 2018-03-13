@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relative_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.cloudaping.cloudaping_android.LoginActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -87,7 +89,6 @@
         android:elevation="5dp"
         android:ems="19"
         android:text="Sign Up"
-        android:textColor="@color/colorOrigin"
-        android:onClick="OnRegister"/>
+        android:textColor="@color/colorOrigin"/>
 
 </RelativeLayout>
