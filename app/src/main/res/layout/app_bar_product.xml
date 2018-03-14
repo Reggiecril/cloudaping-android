@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cloudaping.cloudaping_android.ProductActivity">
+    tools:context="com.cloudaping.cloudaping_android.ProductActivity"
+    tools:showIn="@layout/app_bar_product">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -16,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorWhite"
-            app:navigationIcon="@drawable/ic_menu_black_36dp"
             app:theme="@style/AppTheme.AppBarOverlay"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 

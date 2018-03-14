@@ -5,6 +5,6 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title=""
-        android:icon="@drawable/ic_sort_black_24dp"
+        android:icon="@drawable/ic_sort_black_36dp"
         app:showAsAction="ifRoom" />
 </menu>
