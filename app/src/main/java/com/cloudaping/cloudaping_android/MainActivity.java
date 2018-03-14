@@ -37,96 +37,219 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     ViewPager viewPager;
-    private RecyclerView recyclerView;
-    private GridLayoutManager gridLayoutManager;
-    private CustomAdapter adapter;
-    private List<MyData> data_list;
+    private RecyclerView recyclerViewPopular,recyclerViewRecommend,recyclerViewNew;
+    private GridLayoutManager gridLayoutManagerPopular,gridLayoutManagerRecommend,gridLayoutManagerNew;
+    private CustomAdapter adapterPopular,adapterRecommend,adapterNew;
+    private List<MyData> data_listPopular,data_listRecommend,data_listNew;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //viewPager
         viewPager = (ViewPager)findViewById(R.id.viewPager);
-
         ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(this);
-
         viewPager.setAdapter(viewPagerAdapter);
         setupLaunchButton();
-        //recyclerView
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        data_list  = new ArrayList<>();
-        load_data_from_server(0);
 
-        gridLayoutManager = new GridLayoutManager(this,2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        //Popular RecyclerView
+        recyclerViewPopular = (RecyclerView) findViewById(R.id.RecyclerViewPopular);
+        data_listPopular  = new ArrayList<>();
+        load_data_from_server(0,"popular");
 
-        adapter = new CustomAdapter(this,data_list);
-        recyclerView.setAdapter(adapter);
+        gridLayoutManagerPopular = new GridLayoutManager(this,2);
+        recyclerViewPopular.setLayoutManager(gridLayoutManagerPopular);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        adapterPopular = new CustomAdapter(this,data_listPopular);
+        recyclerViewPopular.setAdapter(adapterPopular);
+
+        recyclerViewPopular.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
-                if(gridLayoutManager.findLastCompletelyVisibleItemPosition() == data_list.size()-1){
-                    load_data_from_server(data_list.get(data_list.size()-1).getId());
+                if(gridLayoutManagerPopular.findLastCompletelyVisibleItemPosition() == data_listPopular.size()-1){
+                    load_data_from_server(data_listPopular.get(data_listPopular.size()-1).getId(),"popular");
+                }
+
+            }
+        });
+        //Recommend RecyclerView
+        recyclerViewRecommend = (RecyclerView) findViewById(R.id.RecyclerViewRecommend);
+        data_listRecommend  = new ArrayList<>();
+        load_data_from_server(0,"recommend");
+
+        gridLayoutManagerRecommend = new GridLayoutManager(this,2);
+        recyclerViewRecommend.setLayoutManager(gridLayoutManagerRecommend);
+
+        adapterRecommend = new CustomAdapter(this,data_listRecommend);
+        recyclerViewRecommend.setAdapter(adapterRecommend);
+
+        recyclerViewRecommend.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if(gridLayoutManagerRecommend.findLastCompletelyVisibleItemPosition() == data_listRecommend.size()-1){
+                    load_data_from_server(data_listRecommend.get(data_listRecommend.size()-1).getId(),"recommend");
+                }
+
+            }
+        });
+        //New RecyclerView
+        recyclerViewNew = (RecyclerView) findViewById(R.id.RecyclerViewNew);
+        data_listNew  = new ArrayList<>();
+        load_data_from_server(0,"new");
+
+        gridLayoutManagerNew = new GridLayoutManager(this,2);
+        recyclerViewNew.setLayoutManager(gridLayoutManagerNew);
+
+        adapterNew = new CustomAdapter(this,data_listNew);
+        recyclerViewNew.setAdapter(adapterNew);
+
+        recyclerViewNew.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if(gridLayoutManagerNew.findLastCompletelyVisibleItemPosition() == data_listNew.size()-1){
+                    load_data_from_server(data_listNew.get(data_listNew.size()-1).getId(),"new");
                 }
 
             }
         });
 
     }
-    private void load_data_from_server(int id) {
+    private void load_data_from_server(int id,String type) {
+        if (type == "popular") {
+            AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
+                @Override
+                protected Void doInBackground(Integer... integers) {
 
-        AsyncTask<Integer,Void,Void> task = new AsyncTask<Integer, Void, Void>() {
-            @Override
-            protected Void doInBackground(Integer... integers) {
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url("http://cloudaping.com/android/androidPopular.php?id=" + integers[0])
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
 
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder()
-                        .url("http://cloudaping.com/android/androidPopular.php?id="+integers[0])
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
+                        JSONArray array = new JSONArray(response.body().string());
 
-                    JSONArray array = new JSONArray(response.body().string());
+                        for (int i = 0; i < array.length(); i++) {
 
-                    for (int i=0; i<array.length(); i++){
+                            JSONObject object = array.getJSONObject(i);
 
-                        JSONObject object = array.getJSONObject(i);
+                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
+                                    object.getString("product_mainImage"));
 
-                        MyData data = new MyData(object.getInt("product_id"),object.getString("product_name"),
-                                object.getString("product_mainImage"));
+                            data_listPopular.add(data);
+                        }
 
-                        data_list.add(data);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        System.out.println("End of content");
                     }
-
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    System.out.println("End of content");
+                    return null;
                 }
-                return null;
-            }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                adapter.notifyDataSetChanged();
-            }
-        };
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    adapterPopular.notifyDataSetChanged();
+                }
+            };
+            task.execute(id);
+        }else if(type == "recommend"){
+            final String s="22";
+            AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
+                @Override
+                protected Void doInBackground(Integer... integers) {
 
-        task.execute(id);
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url("http://cloudaping.com/android/androidRecommend.php?id="+ integers[0])
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+
+                        JSONArray array = new JSONArray(response.body().string());
+
+                        for (int i = 0; i < array.length(); i++) {
+
+                            JSONObject object = array.getJSONObject(i);
+
+                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
+                                    object.getString("product_mainImage"));
+
+                            data_listRecommend.add(data);
+                        }
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        System.out.println("End of content");
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    adapterRecommend.notifyDataSetChanged();
+                }
+            };
+            task.execute(id);
+        }else if(type == "new"){
+            AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
+                @Override
+                protected Void doInBackground(Integer... integers) {
+
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url("http://cloudaping.com/android/androidNew.php?id=" + integers[0])
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+
+                        JSONArray array = new JSONArray(response.body().string());
+
+                        for (int i = 0; i < array.length(); i++) {
+
+                            JSONObject object = array.getJSONObject(i);
+
+                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
+                                    object.getString("product_mainImage"));
+
+                            data_listNew.add(data);
+                        }
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        System.out.println("End of content");
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    adapterNew.notifyDataSetChanged();
+                }
+            };
+            task.execute(id);
+        }
+
+
     }
 
     private void setupLaunchButton(){
@@ -174,7 +297,6 @@ public class MainActivity extends AppCompatActivity
         SearchView searchView=(SearchView)item.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            TextView textView=(TextView)findViewById(R.id.cloudaping);
 
             @Override
             public boolean onQueryTextSubmit(String query) {

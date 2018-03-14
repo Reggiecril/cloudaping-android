@@ -31,7 +31,7 @@
                 android:textSize="24sp" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    <include layout="@layout/content_product" />
+    <include layout="@layout/content_product"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
