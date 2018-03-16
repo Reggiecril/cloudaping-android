@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     private GridLayoutManager gridLayoutManagerPopular,gridLayoutManagerRecommend,gridLayoutManagerNew;
     private CustomAdapter adapterPopular,adapterRecommend,adapterNew;
     private List<MyData> data_listPopular,data_listRecommend,data_listNew;
+    public static final String EXTRA_MESSAGE =
+            "com.cloudaping.cloudaping_android.extra.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,16 +76,6 @@ public class MainActivity extends AppCompatActivity
         adapterPopular = new CustomAdapter(this,data_listPopular);
         recyclerViewPopular.setAdapter(adapterPopular);
 
-        recyclerViewPopular.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                if(gridLayoutManagerPopular.findLastCompletelyVisibleItemPosition() == data_listPopular.size()-1){
-                    load_data_from_server(data_listPopular.get(data_listPopular.size()-1).getId(),"popular");
-                }
-
-            }
-        });
         //Recommend RecyclerView
         recyclerViewRecommend = (RecyclerView) findViewById(R.id.RecyclerViewRecommend);
         data_listRecommend  = new ArrayList<>();
@@ -95,16 +87,6 @@ public class MainActivity extends AppCompatActivity
         adapterRecommend = new CustomAdapter(this,data_listRecommend);
         recyclerViewRecommend.setAdapter(adapterRecommend);
 
-        recyclerViewRecommend.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                if(gridLayoutManagerRecommend.findLastCompletelyVisibleItemPosition() == data_listRecommend.size()-1){
-                    load_data_from_server(data_listRecommend.get(data_listRecommend.size()-1).getId(),"recommend");
-                }
-
-            }
-        });
         //New RecyclerView
         recyclerViewNew = (RecyclerView) findViewById(R.id.RecyclerViewNew);
         data_listNew  = new ArrayList<>();
@@ -115,17 +97,6 @@ public class MainActivity extends AppCompatActivity
 
         adapterNew = new CustomAdapter(this,data_listNew);
         recyclerViewNew.setAdapter(adapterNew);
-
-        recyclerViewNew.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                if(gridLayoutManagerNew.findLastCompletelyVisibleItemPosition() == data_listNew.size()-1){
-                    load_data_from_server(data_listNew.get(data_listNew.size()-1).getId(),"new");
-                }
-
-            }
-        });
 
     }
     private void load_data_from_server(int id,String type) {
@@ -169,7 +140,6 @@ public class MainActivity extends AppCompatActivity
             };
             task.execute(id);
         }else if(type == "recommend"){
-            final String s="22";
             AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
                 @Override
                 protected Void doInBackground(Integer... integers) {
@@ -251,30 +221,79 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+    //to login activity
+    public void ToLogin(View view){
+        Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(intent);
+    }
+    //to register activity
+    public void ToRegister(View view){
+        Intent intent=new Intent(MainActivity.this,RegisterActivity.class);
+        startActivity(intent);
+    }
 
+    /**
+     * set action to six image button turn to product activity
+     */
     private void setupLaunchButton(){
-        ImageButton button1=(ImageButton) findViewById(R.id.button);
+        ImageButton button1=(ImageButton) findViewById(R.id.btn_laptop);
         button1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent=new Intent(MainActivity.this,ProductActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE, "laptop");
                 startActivity(intent);
             }
         });
-        ImageButton button2=(ImageButton) findViewById(R.id.button2);
+        ImageButton button2=(ImageButton) findViewById(R.id.btn_mobile);
         button2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent1=new Intent(MainActivity.this,LoginActivity.class);
-                startActivity(intent1);
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE, "mobile");
+                startActivity(intent);
             }
         });
-        ImageButton button3=(ImageButton) findViewById(R.id.button3);
+        ImageButton button3=(ImageButton) findViewById(R.id.btn_camera);
         button3.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent2=new Intent(MainActivity.this,RegisterActivity.class);
-                startActivity(intent2);
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE, "camera");
+                startActivity(intent);
+            }
+        });
+        ImageButton button4=(ImageButton) findViewById(R.id.btn_computer);
+        button4.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE, "computer");
+                startActivity(intent);
+            }
+        });
+        ImageButton button5=(ImageButton) findViewById(R.id.btn_audioVideo);
+        button5.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE, "audio&video");
+                startActivity(intent);
+            }
+        });
+        ImageButton button6=(ImageButton) findViewById(R.id.btn_other);
+        button6.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE, "other");
+                startActivity(intent);
             }
         });
     }

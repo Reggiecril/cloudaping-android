@@ -28,7 +28,7 @@
 
 
         <ImageButton
-            android:id="@+id/button2"
+            android:id="@+id/btn_laptop"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="8dp"
@@ -39,7 +39,7 @@
             app:srcCompat="@drawable/laptop" />
 
         <ImageButton
-            android:id="@+id/button"
+            android:id="@+id/btn_mobile"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="148dp"
@@ -50,7 +50,7 @@
             app:srcCompat="@drawable/iphonexdesign" />
 
         <ImageButton
-            android:id="@+id/button3"
+            android:id="@+id/btn_camera"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentRight="true"
@@ -62,7 +62,7 @@
             app:srcCompat="@drawable/camera" />
 
         <ImageButton
-            android:id="@+id/button6"
+            android:id="@+id/btn_computer"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="8dp"
@@ -73,7 +73,7 @@
             app:srcCompat="@drawable/computer" />
 
         <ImageButton
-            android:id="@+id/button5"
+            android:id="@+id/btn_audioVideo"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="148dp"
@@ -84,7 +84,7 @@
             app:srcCompat="@drawable/x_box" />
 
         <ImageButton
-            android:id="@+id/button4"
+            android:id="@+id/btn_other"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginLeft="288dp"

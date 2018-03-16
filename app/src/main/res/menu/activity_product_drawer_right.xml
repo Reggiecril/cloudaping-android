@@ -29,9 +29,9 @@
         <menu>
             <group android:checkableBehavior="none">
                 <item
-                    android:id="@+id/nav_review"
+                    android:id="@+id/nav_quantity"
                     app:actionLayout="@layout/icon_menu_product"
-                    android:title="Review" />
+                    android:title="Quantity" />
             </group>
         </menu>
     </item>

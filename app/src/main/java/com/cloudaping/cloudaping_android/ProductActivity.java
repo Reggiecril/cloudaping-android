@@ -1,5 +1,6 @@
 package com.cloudaping.cloudaping_android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +24,9 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,19 +73,35 @@ public class ProductActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         //display the right navigation drawer
         displayRightNavigation();
-        productConnection();
+        connection();
 
 
 
     }
-    public void productConnection(){
+
+    /**
+     * display views when first load
+     */
+    public void connection(){
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+
+        productConnection(message,"");
+    }
+
+    /**
+     * add type and filter to sort product from database
+     * @param type
+     * @param filter
+     */
+    public void productConnection(String type,String filter){
         //RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
         data_list = new ArrayList<>();
-        load_data_from_server("0");
+        load_data_from_server("0",type,filter);
 
         gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -89,30 +109,28 @@ public class ProductActivity extends AppCompatActivity
         adapter = new CustomAdapter(this, data_list);
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
-                if (gridLayoutManager.findLastCompletelyVisibleItemPosition() == data_list.size() - 1) {
-                    load_data_from_server(String.valueOf(data_list.get(data_list.size() - 1).getId()));
-                }
-
-            }
-        });
     }
 
         /**
          * load data from server
          */
-    private void load_data_from_server(String id) {
+    private void load_data_from_server(String id,String type,String filter) {
             AsyncTask<String, Void, Void> task = new AsyncTask<String, Void, Void>() {
                 @Override
                 protected Void doInBackground(String... Strings) {
 
                     OkHttpClient client = new OkHttpClient();
-                    Request request = new Request.Builder()
-                            .url("http://cloudaping.com/android/androidPopular.php?id=" + Strings[0])
-                            .build();
+                    String url;
+                    if (Strings[2]==""){
+                        url="http://cloudaping.com/android/androidProduct.php?id=" + Strings[0] + "&product=" + Strings[1];
+                    }else {
+                        url="http://cloudaping.com/android/androidProduct.php?id=" + Strings[0] + "&product=" + Strings[1] + "&filter=" + Strings[2];
+                    }
+                        Request request = new Request.Builder()
+                                .url(url)
+                                .build();
+
                     try {
                         Response response = client.newCall(request).execute();
 
@@ -142,9 +160,16 @@ public class ProductActivity extends AppCompatActivity
                     adapter.notifyDataSetChanged();
                 }
             };
-            task.execute(id);
+            task.execute(id,type,filter);
     }
-
+    public void ToLogin(){
+        Intent intent=new Intent(ProductActivity.this,LoginActivity.class);
+        startActivity(intent);
+    }
+    public void ToRegister(){
+        Intent intent=new Intent(ProductActivity.this,RegisterActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -187,6 +212,8 @@ public class ProductActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_right);
                 LinearLayout gallery;
+                Intent intent = getIntent();
+                String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
                 // Handle navigation view item clicks here.
                 int id = item.getItemId();
                 if(id == R.id.nav_price){
@@ -194,24 +221,44 @@ public class ProductActivity extends AppCompatActivity
                     ImageView imageView= (ImageView) gallery.findViewById(R.id.icon_up);
                     imageView.setRotation(imageView.getRotation()+180);
                     itemId(R.id.nav_price,navigationView,gallery);
+                    float rotate=imageView.getRotation()/180;
+                    if (rotate%2==1)
+                        productConnection(message,"price");
+                    else
+                        productConnection(message,"priceDESC");
 
                 }else if (id == R.id.nav_sale) {
                     gallery = (LinearLayout) navigationView.getMenu().findItem(R.id.nav_sale).getActionView();
                     ImageView imageView= (ImageView) gallery.findViewById(R.id.icon_up);
                     imageView.setRotation(imageView.getRotation()+180);
                     itemId(R.id.nav_sale,navigationView,gallery);
+                    float rotate=imageView.getRotation()/180;
+                    if (rotate%2==1)
+                        productConnection(message,"sell");
+                    else
+                        productConnection(message,"sellDESC");
 
-                } else if (id == R.id.nav_review) {
-                    gallery = (LinearLayout) navigationView.getMenu().findItem(R.id.nav_review).getActionView();
+                } else if (id == R.id.nav_quantity) {
+                    gallery = (LinearLayout) navigationView.getMenu().findItem(R.id.nav_quantity).getActionView();
                     ImageView imageView= (ImageView) gallery.findViewById(R.id.icon_up);
                     imageView.setRotation(imageView.getRotation()+180);
-                    itemId(R.id.nav_review,navigationView,gallery);
+                    itemId(R.id.nav_quantity,navigationView,gallery);
+                    float rotate=imageView.getRotation()/180;
+                    if (rotate%2==1)
+                        productConnection(message,"quantity");
+                    else
+                        productConnection(message,"quantityDESC");
 
                 } else if (id == R.id.nav_updateTime) {
                     gallery = (LinearLayout) navigationView.getMenu().findItem(R.id.nav_updateTime).getActionView();
                     ImageView imageView= (ImageView) gallery.findViewById(R.id.icon_up);
                     imageView.setRotation(imageView.getRotation()+180);
                     itemId(R.id.nav_updateTime,navigationView,gallery);
+                    float rotate=imageView.getRotation()/180;
+                    if (rotate%2==1)
+                        productConnection(message,"update");
+                    else
+                        productConnection(message,"updateDESC");
                 }
 //                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //                drawer.closeDrawer(GravityCompat.END);
@@ -226,10 +273,10 @@ public class ProductActivity extends AppCompatActivity
              * @param gallery
              */
             public void itemId(int resource,NavigationView navigationView,LinearLayout gallery){
-                int []allResource=new int[]{R.id.nav_price,R.id.nav_sale,R.id.nav_review,R.id.nav_updateTime};
+                int []allResource=new int[]{R.id.nav_price,R.id.nav_sale,R.id.nav_updateTime,R.id.nav_quantity};
                 HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
-                ImageView imageView1= (ImageView) gallery.findViewById(R.id.icon_up);
-                imageView1.setImageResource(R.drawable.ic_arrow_upward_black_24dp);
+                ImageView imageView= (ImageView) gallery.findViewById(R.id.icon_up);
+                imageView.setImageResource(R.drawable.ic_arrow_upward_black_24dp);
 
                 for (int i=0;i<allResource.length;i++){
                     map.put(allResource[i],allResource[i]);
@@ -246,8 +293,9 @@ public class ProductActivity extends AppCompatActivity
                 for (Integer value : map.values()){
 
                     gallery = (LinearLayout) navigationView.getMenu().findItem(value).getActionView();
-                    ImageView imageView= (ImageView) gallery.findViewById(R.id.icon_up);
-                    imageView.setImageResource(R.drawable.ic_remove_black_24dp);
+                    ImageView imageView1= (ImageView) gallery.findViewById(R.id.icon_up);
+                    imageView1.setImageResource(R.drawable.ic_remove_black_24dp);
+                    imageView1.setRotation(0);
                 }
             }
         });

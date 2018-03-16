@@ -5,33 +5,41 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="My Account" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:id="@+id/nav_order"
+            android:icon="@drawable/ic_shopping_cart_black_24dp"
+            android:title="My Order" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_payments"
+            android:icon="@drawable/ic_credit_card_black_24dp"
+            android:title="My Payment" />
+        <item
+            android:id="@+id/nav_favourite"
+            android:icon="@drawable/ic_favorite_black_24dp"
+            android:title="My Favourite" />
+        <item
+            android:id="@+id/nav_resetPassword"
+            android:icon="@drawable/ic_find_replace_black_24dp"
+            android:title="Reset Password" />
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_aboutUs"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="About Us" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_contactUs"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Contact Us" />
         </menu>
     </item>
 
