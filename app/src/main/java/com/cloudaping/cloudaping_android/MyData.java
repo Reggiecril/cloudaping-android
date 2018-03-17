@@ -7,12 +7,13 @@ package com.cloudaping.cloudaping_android;
 public class MyData {
 
     private int id;
-    private String description,image_link;
+    private String description,image_link,price;
 
-    public MyData(int id, String description, String image_link) {
+    public MyData(int id, String description, String image_link,String price) {
         this.id = id;
         this.description = description;
         this.image_link = image_link;
+        this.price=price;
     }
 
     public int getId() {
@@ -21,6 +22,14 @@ public class MyData {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPrice() {
+        return "£"+price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public String getDescription() {

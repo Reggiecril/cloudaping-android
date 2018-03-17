@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity
                             JSONObject object = array.getJSONObject(i);
 
                             MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
-                                    object.getString("product_mainImage"));
+                                    object.getString("product_mainImage"),object.getString("product_nowPrice"));
 
                             data_listPopular.add(data);
                         }
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity
                             JSONObject object = array.getJSONObject(i);
 
                             MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
-                                    object.getString("product_mainImage"));
+                                    object.getString("product_mainImage"),object.getString("product_nowPrice"));
 
                             data_listRecommend.add(data);
                         }
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity
                             JSONObject object = array.getJSONObject(i);
 
                             MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
-                                    object.getString("product_mainImage"));
+                                    object.getString("product_mainImage"),object.getString("product_nowPrice"));
 
                             data_listNew.add(data);
                         }

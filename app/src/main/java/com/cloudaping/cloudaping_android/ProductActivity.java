@@ -54,6 +54,14 @@ public class ProductActivity extends AppCompatActivity
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
         //FloatingActionButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -65,14 +73,7 @@ public class ProductActivity extends AppCompatActivity
             }
         });
 
-        //Navigation
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
         //display the right navigation drawer
         displayRightNavigation();
         connection();
@@ -141,7 +142,7 @@ public class ProductActivity extends AppCompatActivity
                             JSONObject object = array.getJSONObject(i);
 
                             MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
-                                    object.getString("product_mainImage"));
+                                    object.getString("product_mainImage"),object.getString("product_nowPrice"));
 
                             data_list.add(data);
                         }
@@ -162,11 +163,11 @@ public class ProductActivity extends AppCompatActivity
             };
             task.execute(id,type,filter);
     }
-    public void ToLogin(){
+    public void ToLogin(View view){
         Intent intent=new Intent(ProductActivity.this,LoginActivity.class);
         startActivity(intent);
     }
-    public void ToRegister(){
+    public void ToRegister(View view){
         Intent intent=new Intent(ProductActivity.this,RegisterActivity.class);
         startActivity(intent);
     }
@@ -307,28 +308,6 @@ public class ProductActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            Intent intent=new Intent(ProductActivity.this,MainActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_account) {
-
-        } else if (id == R.id.nav_order) {
-
-        } else if (id == R.id.nav_payments) {
-
-        } else if (id == R.id.nav_favourite) {
-
-        } else if (id == R.id.nav_resetPassword) {
-
-        } else if (id == R.id.nav_aboutUs) {
-
-        } else if (id == R.id.nav_contactUs) {
-
-        }
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
