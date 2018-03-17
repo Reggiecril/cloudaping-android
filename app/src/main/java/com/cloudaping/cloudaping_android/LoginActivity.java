@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,6 +28,8 @@ import java.net.URLEncoder;
 public class LoginActivity extends AppCompatActivity  {
     EditText UsernameEt, PasswordEt;
     Button register;
+    private Session session;//global variable
+    public static final String EXTRA_MESSAGE ="com.cloudaping.cloudaping_android.extra.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,12 @@ public class LoginActivity extends AppCompatActivity  {
                 onBackPressed();
             }
         });
+        //session
+        session = new Session(this); //in oncreate
+        if (session.getCustomerID()!=""){
+            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
 
         UsernameEt = (EditText)findViewById(R.id.txtEmail);
         PasswordEt = (EditText)findViewById(R.id.txtPassword);
@@ -119,15 +128,23 @@ public class LoginActivity extends AppCompatActivity  {
 
         @Override
         protected void onPreExecute() {
-            alertDialog = new AlertDialog.Builder(context).create();
-            alertDialog.setTitle("Login Status");
         }
 
         @Override
         protected void onPostExecute(String result) {
-            alertDialog.setMessage(result);
-            alertDialog.show();
-            onBackPressed();
+
+            //and now we set sharedpreference then use this like
+            if(result.equals("unsuccess")) {
+                Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
+            }else{
+                session.setCustomerID(result);
+                Intent intent = new Intent(LoginActivity.this, ItemActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE, result);
+                startActivity(intent);
+            }
+
+
         }
 
         @Override

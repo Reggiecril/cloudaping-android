@@ -163,14 +163,6 @@ public class ProductActivity extends AppCompatActivity
             };
             task.execute(id,type,filter);
     }
-    public void ToLogin(View view){
-        Intent intent=new Intent(ProductActivity.this,LoginActivity.class);
-        startActivity(intent);
-    }
-    public void ToRegister(View view){
-        Intent intent=new Intent(ProductActivity.this,RegisterActivity.class);
-        startActivity(intent);
-    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

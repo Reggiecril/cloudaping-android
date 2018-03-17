@@ -3,6 +3,7 @@ package com.cloudaping.cloudaping_android;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
@@ -20,11 +21,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,8 +46,8 @@ public class MainActivity extends AppCompatActivity
     private GridLayoutManager gridLayoutManagerPopular,gridLayoutManagerRecommend,gridLayoutManagerNew;
     private CustomAdapter adapterPopular,adapterRecommend,adapterNew;
     private List<MyData> data_listPopular,data_listRecommend,data_listNew;
-    public static final String EXTRA_MESSAGE =
-            "com.cloudaping.cloudaping_android.extra.MESSAGE";
+    public static final String EXTRA_MESSAGE ="com.cloudaping.cloudaping_android.extra.MESSAGE";
+    private Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +56,10 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //session
+        session = new Session(this);
+        String string_session=session.getCustomerID();
+        Toast.makeText(this, string_session, Toast.LENGTH_SHORT).show();
         //Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -58,6 +67,14 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if (string_session==""){
+            View header = getLayoutInflater().inflate(R.layout.nav_header_main,navigationView,false);
+            navigationView.addHeaderView(header);
+        }else{
+            View header = getLayoutInflater().inflate(R.layout.loggedin_nav_header,navigationView,false);
+            navigationView.addHeaderView(header);
+        }
+
 
         //viewPager
         viewPager = (ViewPager)findViewById(R.id.viewPager);
@@ -65,6 +82,9 @@ public class MainActivity extends AppCompatActivity
         viewPager.setAdapter(viewPagerAdapter);
         setupLaunchButton();
 
+        /*
+         *for displaying recyclerView
+         */
         //Popular RecyclerView
         recyclerViewPopular = (RecyclerView) findViewById(R.id.RecyclerViewPopular);
         data_listPopular  = new ArrayList<>();
@@ -99,6 +119,12 @@ public class MainActivity extends AppCompatActivity
         recyclerViewNew.setAdapter(adapterNew);
 
     }
+
+    /**
+     * get data from website
+     * @param id
+     * @param type
+     */
     private void load_data_from_server(int id,String type) {
         if (type == "popular") {
             AsyncTask<Integer, Void, Void> task = new AsyncTask<Integer, Void, Void>() {
@@ -241,7 +267,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, ProductActivity.class);
-
                 intent.putExtra(EXTRA_MESSAGE, "laptop");
                 startActivity(intent);
             }

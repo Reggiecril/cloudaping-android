@@ -29,6 +29,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private static final String TAG = "RecyclerViewAdapter";
     private Context context;
     private List<MyData> my_data;
+    public static final String EXTRA_MESSAGE = "com.cloudaping.cloudaping_android.extra.MESSAGE";
 
     public CustomAdapter(Context context, List<MyData> my_data) {
         this.context = context;
@@ -45,24 +46,27 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder,final int position) {
-
+        final String id=Integer.toString(my_data.get(position).getId());
         holder.name.setText(my_data.get(position).getDescription());
         holder.price.setText(my_data.get(position).getPrice());
         Glide.with(context).load(my_data.get(position).getImage_link()).into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + my_data.get(position));
 
-                Toast.makeText(context, my_data.get(position).getDescription(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ItemActivity.class);
+
+                intent.putExtra(EXTRA_MESSAGE, id);
+                context.startActivity(intent);
             }
         });
         holder.line_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + my_data.get(position));
+                Intent intent = new Intent(context, ItemActivity.class);
 
-                Toast.makeText(context, my_data.get(position).getDescription(), Toast.LENGTH_SHORT).show();
+                intent.putExtra(EXTRA_MESSAGE, id);
+                context.startActivity(intent);
             }
         });
     }
