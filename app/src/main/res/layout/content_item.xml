@@ -8,5 +8,8 @@
     android:layout_marginTop="60dp"
     xmlns:card_view="http://schemas.android.com/tools"
     tools:showIn="@layout/app_bar_item">>
-
+    <include
+        layout="@layout/viewpager_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </android.support.constraint.ConstraintLayout>

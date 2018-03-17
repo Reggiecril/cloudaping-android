@@ -78,8 +78,15 @@ public class MainActivity extends AppCompatActivity
 
         //viewPager
         viewPager = (ViewPager)findViewById(R.id.viewPager);
-        ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(this);
+        String [] images={"http://cloudaping.com/assets/images/1491587284_screen_shot_2017-04-07_at_10.47.03_am.jpg",
+                          "http://cloudaping.com/assets/images/d7e5ee71fa9452b10dbcda80c0b5f3c4.jpg",
+                          "http://cloudaping.com/assets/images/beats-ad-800x332.jpg",
+                          "http://cloudaping.com/assets/images/xbox one commercial $399.png",
+                          "http://cloudaping.com/assets/images/Screen-Shot-2014-01-02-at-4.27.12-AM.png"};
+        ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(this,R.id.imageView2,images);
         viewPager.setAdapter(viewPagerAdapter);
+
+        //imageButton
         setupLaunchButton();
 
         /*
