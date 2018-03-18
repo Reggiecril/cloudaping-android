@@ -3,6 +3,7 @@ package com.cloudaping.cloudaping_android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -50,7 +51,7 @@ public class ItemActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE ="com.cloudaping.cloudaping_android.extra.MESSAGE";
     ViewPager itemViewPager;
     private RequestQueue mQueue;
-    private TextView nowPrice;
+    private TextView nowPrice,originPrice,review,name;
     private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,10 @@ public class ItemActivity extends AppCompatActivity {
         });
         //
         nowPrice=(TextView)findViewById(R.id.txt_item_nowPrice);
+        originPrice=(TextView)findViewById(R.id.txt_item_originPrice);
+        originPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
+        review=(TextView)findViewById(R.id.txt_item_review_count);
+        name=(TextView)findViewById(R.id.txt_item_name);
         //receive message from other activity
         Intent intent = getIntent();
         String message = intent.getStringExtra(CustomAdapter.EXTRA_MESSAGE);
@@ -88,7 +93,7 @@ public class ItemActivity extends AppCompatActivity {
         mQueue = Volley.newRequestQueue(this);
         jsonParse(message);
         //ViewPager
-        ImageView imageView = (ImageView)findViewById(R.id.imageView_item);
+        imageView = (ImageView)findViewById(R.id.imageView_item);
 
 
 
@@ -103,7 +108,7 @@ public class ItemActivity extends AppCompatActivity {
 
         String url = "http://cloudaping.com/android/androidItem.php?id="+id;
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -113,7 +118,10 @@ public class ItemActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject object = jsonArray.getJSONObject(i);
 //                                 data = new MyData(object.getInt("product_id"), object.getString("product_name"),object.getString("product_mainImage"), object.getString("product_type"),object.getString("product_originPrice"), object.getString("product_quantity"), object.getString("product_category"), object.getString("product_trader_id"),object.getString("product_updateDate"),object.getString("product_sell"), object.getString("product_nowPrice"));
-                                nowPrice.setText(object.getString("product_name"));
+                                nowPrice.setText("£"+object.getString("product_nowPrice"));
+                                originPrice.setText("Old: £"+object.getString("product_originPrice"));
+                                review.setText(object.getString("product_review"));
+                                name.setText(object.getString("product_name"));
                                 Glide.with(ItemActivity.this).load("http://cloudaping.com/assets/images/"+object.getString("product_mainImage")).into(imageView);
 
                             }
