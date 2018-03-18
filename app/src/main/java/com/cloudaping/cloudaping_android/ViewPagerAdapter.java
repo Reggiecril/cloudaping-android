@@ -16,17 +16,21 @@ import com.bumptech.glide.Glide;
 public class ViewPagerAdapter extends PagerAdapter{
     private Context context;
     private LayoutInflater layoutInflater;
-    private String[] imageUrl;
-    private Integer imageID;
+    private Integer id;
+    private String [] images={"http://cloudaping.com/assets/images/1491587284_screen_shot_2017-04-07_at_10.47.03_am.jpg",
+            "http://cloudaping.com/assets/images/d7e5ee71fa9452b10dbcda80c0b5f3c4.jpg",
+            "http://cloudaping.com/assets/images/beats-ad-800x332.jpg",
+            "http://cloudaping.com/assets/images/xbox one commercial $399.png",
+            "http://cloudaping.com/assets/images/Screen-Shot-2014-01-02-at-4.27.12-AM.png"};
 
-    public ViewPagerAdapter(Context context,Integer imageID,String[] imageUrl){
+    public ViewPagerAdapter(Context context,Integer id,String[] images){
         this.context=context;
-        this.imageID=imageID;
-        this.imageUrl=imageUrl;
+        this.id=id;
+        this.images=images;
     }
     @Override
     public int getCount(){
-        return imageUrl.length;
+        return images.length;
     }
 
     @Override
@@ -36,8 +40,8 @@ public class ViewPagerAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container,int position){
         layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.content_main,null);
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView2);
-        Glide.with(context).load(imageUrl[position]).into(imageView);
+        ImageView imageView = (ImageView) view.findViewById(id);
+        Glide.with(context).load(images[position]).into(imageView);
 
         ViewPager vp=(ViewPager) container;
         vp.addView(view,0);

@@ -25,6 +25,7 @@ import java.net.URLEncoder;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText firstName,lastName,email,password,confirmPassword;
+    Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,12 @@ public class RegisterActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
+        //session
+        session = new Session(this); //in oncreate
+        if (session.getCustomerID()!=""){
+            Intent intent=new Intent(RegisterActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
         firstName=findViewById(R.id.txtFirstName);
         lastName=findViewById(R.id.txtLastName);
         email=findViewById(R.id.txtEmail);

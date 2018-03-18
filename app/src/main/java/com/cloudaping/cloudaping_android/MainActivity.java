@@ -150,9 +150,7 @@ public class MainActivity extends AppCompatActivity
                         for (int i = 0; i < array.length(); i++) {
 
                             JSONObject object = array.getJSONObject(i);
-
-                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
-                                    object.getString("product_mainImage"),object.getString("product_nowPrice"));
+                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),object.getString("product_mainImage"), object.getString("product_type"),object.getString("product_originPrice"), object.getString("product_quantity"), object.getString("product_category"), object.getString("product_trader_id"),object.getString("product_updateDate"),object.getString("product_sell"), object.getString("product_nowPrice"));
 
                             data_listPopular.add(data);
                         }
@@ -190,8 +188,8 @@ public class MainActivity extends AppCompatActivity
 
                             JSONObject object = array.getJSONObject(i);
 
-                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
-                                    object.getString("product_mainImage"),object.getString("product_nowPrice"));
+                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),object.getString("product_mainImage"), object.getString("product_type"),object.getString("product_originPrice"), object.getString("product_quantity"), object.getString("product_category"), object.getString("product_trader_id"),object.getString("product_updateDate"),object.getString("product_sell"), object.getString("product_nowPrice"));
+
 
                             data_listRecommend.add(data);
                         }
@@ -229,8 +227,8 @@ public class MainActivity extends AppCompatActivity
 
                             JSONObject object = array.getJSONObject(i);
 
-                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),
-                                    object.getString("product_mainImage"),object.getString("product_nowPrice"));
+                            MyData data = new MyData(object.getInt("product_id"), object.getString("product_name"),object.getString("product_mainImage"), object.getString("product_type"),object.getString("product_originPrice"), object.getString("product_quantity"), object.getString("product_category"), object.getString("product_trader_id"),object.getString("product_updateDate"),object.getString("product_sell"), object.getString("product_nowPrice"));
+
 
                             data_listNew.add(data);
                         }
