@@ -30,7 +30,7 @@
             android:id="@+id/tv_commodity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="酒红色纯红色纯羊毛西服套装"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="属性:粉蓝色"
+                android:text=""
                 android:textSize="12sp"
                  />
         </LinearLayout>
@@ -56,7 +56,7 @@
                 android:id="@+id/tv_commodity_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥390"
+                android:text=""
                 android:textColor="@color/red"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="x1"
+                android:text=""
                 android:textColor="@color/gray" />
             <LinearLayout
                 android:id="@+id/rl_edit"

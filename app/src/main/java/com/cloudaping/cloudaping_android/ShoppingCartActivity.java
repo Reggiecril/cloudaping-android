@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
  * 购物车界面
  *
  */
-public class ShoppingCartActivity extends Activity implements View.OnClickListener
+public class ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener
         , ShoppingCartAdapter.CheckInterface, ShoppingCartAdapter.ModifyCountInterface {
     private static final String TAG = "ShoppingCartActivity";
     Button btnBack;
@@ -41,34 +43,46 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
     private boolean mSelect;
     private double totalPrice = 0.00;// 购买的商品总价
     private int totalCount = 0;// 购买的商品总数量
+    private SharedPreference sharedPreference =new SharedPreference();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_shopping_cart_activity);
         initView();
+        //Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         ImageLoader imageLoader=ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
     }
-    private void initView() {
 
+    private void initView() {
+        btnBack= (Button) findViewById(R.id.btn_back);
         ckAll= (CheckBox) findViewById(R.id.ck_all);
         tvShowPrice= (TextView) findViewById(R.id.tv_show_price);
         tvSettlement= (TextView) findViewById(R.id.tv_settlement);
         btnEdit= (TextView) findViewById(R.id.bt_header_right);
         list_shopping_cart= (ListView) findViewById(R.id.list_shopping_cart);
 
-            btnEdit.setOnClickListener(this);
-            ckAll.setOnClickListener(this);
-            tvSettlement.setOnClickListener(this);
-            btnBack.setOnClickListener(this);
+        btnEdit.setOnClickListener(this);
+        ckAll.setOnClickListener(this);
+        tvSettlement.setOnClickListener(this);
+        btnBack.setOnClickListener(this);
 
         initData();
     }
+
     //初始化数据
     protected void initData() {
-        Intent i = getIntent();
-        shoppingCartBeanList = (ArrayList<ShoppingCartBean>) getIntent().getSerializableExtra("my");
-
+        shoppingCartBeanList = sharedPreference.getShoppingCart(this);
         shoppingCartAdapter = new ShoppingCartAdapter(this);
         shoppingCartAdapter.setCheckInterface(this);
         shoppingCartAdapter.setModifyCountInterface(this);
@@ -98,15 +112,18 @@ public class ShoppingCartActivity extends Activity implements View.OnClickListen
             case R.id.bt_header_right:
                 flag = !flag;
                 if (flag) {
-                    btnEdit.setText("完成");
+                    btnEdit.setText("Finish");
                     shoppingCartAdapter.isShow(false);
                 } else {
-                    btnEdit.setText("编辑");
+                    btnEdit.setText("Edit");
                     shoppingCartAdapter.isShow(true);
                 }
                 break;
             case R.id.tv_settlement: //结算
                 lementOnder();
+                break;
+            case R.id.btn_back:
+                finish();
                 break;
         }
     }

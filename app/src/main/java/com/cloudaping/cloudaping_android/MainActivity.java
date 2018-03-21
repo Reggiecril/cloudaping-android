@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private GridLayoutManager gridLayoutManagerPopular,gridLayoutManagerRecommend,gridLayoutManagerNew;
     private CustomAdapter adapterPopular,adapterRecommend,adapterNew;
     private List<MyData> data_listPopular,data_listRecommend,data_listNew;
+    private ArrayList<ShoppingCartBean> list=new ArrayList<>();
     public static final String EXTRA_MESSAGE ="com.cloudaping.cloudaping_android.extra.MESSAGE";
     private Session session;
     @Override
@@ -272,7 +273,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(MainActivity.this, ShoppingCartActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, "laptop");
+//                ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
+//                shoppingCartBean.setShoppingName("瑞士正品夜光男女士手表情侣精钢带男表防水石英学生非天王星机械");
+//                shoppingCartBean.setAttribute("黑白色");
+//                shoppingCartBean.setPrice(89);
+//                shoppingCartBean.setId(2);
+//                shoppingCartBean.setCount(3);
+//                shoppingCartBean.setImageUrl("https://gd1.alicdn.com/imgextra/i1/2160089910/TB2M_NSbB0kpuFjSsppXXcGTXXa_!!2160089910.jpg");
+//                list.add(shoppingCartBean);
                 startActivity(intent);
             }
         });

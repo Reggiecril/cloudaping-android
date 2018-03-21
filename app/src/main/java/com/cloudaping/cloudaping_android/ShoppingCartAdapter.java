@@ -28,6 +28,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
     private CheckInterface checkInterface;
     private ModifyCountInterface modifyCountInterface;
     private Context context;
+    SharedPreference sharedPreference=new SharedPreference();
 
     public ShoppingCartAdapter(Context context) {
         this.context = context;
@@ -101,11 +102,9 @@ public class ShoppingCartAdapter extends BaseAdapter {
         String attribute = shoppingCartBean.getAttribute();
         if (!StringUtil.isEmpty(attribute)){
             holder.tvCommodityAttr.setText(attribute);
-        }else{
-            holder.tvCommodityAttr.setText(shoppingCartBean.getDressSize()+"");
         }
         holder.tvCommodityName.setText(shoppingCartBean.getShoppingName());
-        holder.tvCommodityPrice.setText(shoppingCartBean.getPrice()+"");
+        holder.tvCommodityPrice.setText(" £"+shoppingCartBean.getPrice()+"");
         holder.tvCommodityNum.setText(" X"+shoppingCartBean.getCount()+"");
         holder.tvCommodityShowNum.setText(shoppingCartBean.getCount()+"");
         ImageLoader.getInstance().displayImage(shoppingCartBean.getImageUrl(),holder.ivShowPic);
@@ -138,19 +137,20 @@ public class ShoppingCartAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 AlertDialog alert = new AlertDialog.Builder(context).create();
-                alert.setTitle("操作提示");
-                alert.setMessage("您确定要将这些商品从购物车中移除吗？");
-                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "取消",
+                alert.setTitle("Action Request:");
+                alert.setMessage("Are you sure you would like to remove those items?");
+                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "Canel",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 return;
                             }
                         });
-                alert.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
+                alert.setButton(DialogInterface.BUTTON_POSITIVE, "Remove",
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                sharedPreference.removeShoppingCart(context,position);
                                 modifyCountInterface.childDelete(position);//删除 目前只是从item中移除
 
                             }

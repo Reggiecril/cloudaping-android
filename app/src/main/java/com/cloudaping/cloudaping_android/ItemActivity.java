@@ -1,6 +1,8 @@
 package com.cloudaping.cloudaping_android;
 
 
+import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -26,6 +28,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -55,6 +58,8 @@ public class ItemActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     private TextView nowPrice,originPrice,review,name;
     private ImageView imageView;
+    private  Spinner spinner;
+    SharedPreference sharedPreference=new SharedPreference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +93,7 @@ public class ItemActivity extends AppCompatActivity {
         name=(TextView)findViewById(R.id.txt_item_name);
         //receive message from other activity
         Intent intent = getIntent();
-        String message = intent.getStringExtra(CustomAdapter.EXTRA_MESSAGE);
+        final String message = intent.getStringExtra(CustomAdapter.EXTRA_MESSAGE);
 
 
         //get data from sever
@@ -97,16 +102,62 @@ public class ItemActivity extends AppCompatActivity {
         //ViewPager
         imageView = (ImageView)findViewById(R.id.imageView_item);
 
-        Spinner spinner = (Spinner) findViewById(R.id.item_planets_spinner);
+        spinner = (Spinner) findViewById(R.id.item_planets_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.planets_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+ToastUtil.showL(this,nowPrice.getText().toString());
+        //Button click to add cart
+        Button btn_cart=(Button)findViewById(R.id.btn_item_addCart);
+        btn_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestQueue cart_Queue=Volley.newRequestQueue(ItemActivity.this);
+                String url = "http://cloudaping.com/android/androidItem.php?id="+Integer.valueOf(message);
+
+                final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    JSONArray jsonArray = response.getJSONArray("item");
+
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                                        JSONObject object = jsonArray.getJSONObject(i);
+                                        ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
+                                        shoppingCartBean.setShoppingName(object.getString("product_name"));
+                                        shoppingCartBean.setAttribute("");
+                                        Double price=Double.valueOf(object.getString("product_nowPrice"));
+                                        shoppingCartBean.setPrice(price);
+                                        int id=Integer.valueOf(message);
+                                        shoppingCartBean.setId(id);
+                                        int count=Integer.valueOf(spinner.getSelectedItem().toString());
+                                        shoppingCartBean.setCount(count);
+                                        String imageUrl="http://cloudaping.com/assets/images/"+object.getString("product_mainImage");
+                                        shoppingCartBean.setImageUrl(imageUrl);
+                                        sharedPreference.addShoppingCart(ItemActivity.this,shoppingCartBean);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+                cart_Queue.add(request);
+
+            }
+        });
 
 
-//
 //        Toast.makeText(this, data_list.get(0).getDescription(), Toast.LENGTH_SHORT).show();
 
 
@@ -124,8 +175,9 @@ public class ItemActivity extends AppCompatActivity {
                             JSONArray jsonArray = response.getJSONArray("item");
 
                             for (int i = 0; i < jsonArray.length(); i++) {
+
                                 JSONObject object = jsonArray.getJSONObject(i);
-//                                 data = new MyData(object.getInt("product_id"), object.getString("product_name"),object.getString("product_mainImage"), object.getString("product_type"),object.getString("product_originPrice"), object.getString("product_quantity"), object.getString("product_category"), object.getString("product_trader_id"),object.getString("product_updateDate"),object.getString("product_sell"), object.getString("product_nowPrice"));
+//                              data = new MyData(object.getInt("product_id"), object.getString("product_name"),object.getString("product_mainImage"), object.getString("product_type"),object.getString("product_originPrice"), object.getString("product_quantity"), object.getString("product_category"), object.getString("product_trader_id"),object.getString("product_updateDate"),object.getString("product_sell"), object.getString("product_nowPrice"));
                                 nowPrice.setText("£"+object.getString("product_nowPrice"));
                                 originPrice.setText("Old: £"+object.getString("product_originPrice"));
                                 review.setText(object.getString("product_review"));
