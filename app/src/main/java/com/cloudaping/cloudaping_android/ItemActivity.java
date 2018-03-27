@@ -48,8 +48,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import q.rorbin.badgeview.QBadgeView;
 
 
 public class ItemActivity extends AppCompatActivity {
@@ -59,7 +61,8 @@ public class ItemActivity extends AppCompatActivity {
     private TextView nowPrice,originPrice,review,name;
     private ImageView imageView;
     private  Spinner spinner;
-    SharedPreference sharedPreference=new SharedPreference();
+    private ArrayList<ShoppingCartBean> shoppingCartBeanList = new ArrayList<>();
+    private SharedPreference sharedPreference =new SharedPreference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,12 +80,19 @@ public class ItemActivity extends AppCompatActivity {
         });
 
         //FloatingActionButton
+        shoppingCartBeanList=sharedPreference.getShoppingCart(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (shoppingCartBeanList.size()==0){
+            fab.setVisibility(View.INVISIBLE);
+        }else{
+            fab.setVisibility(View.VISIBLE);
+        }
+        new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent=new Intent(ItemActivity.this,ShoppingCartActivity.class);
+                startActivity(intent);
             }
         });
         //
@@ -109,7 +119,6 @@ public class ItemActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
-ToastUtil.showL(this,nowPrice.getText().toString());
         //Button click to add cart
         Button btn_cart=(Button)findViewById(R.id.btn_item_addCart);
         btn_cart.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +149,8 @@ ToastUtil.showL(this,nowPrice.getText().toString());
                                         String imageUrl="http://cloudaping.com/assets/images/"+object.getString("product_mainImage");
                                         shoppingCartBean.setImageUrl(imageUrl);
                                         sharedPreference.addShoppingCart(ItemActivity.this,shoppingCartBean);
+                                        Intent intent=new Intent(ItemActivity.this,ShoppingCartActivity.class);
+                                        startActivity(intent);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();

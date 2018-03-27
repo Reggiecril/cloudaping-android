@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,7 +36,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
    //结算
     TextView tvSettlement;
    //编辑
-    TextView btnEdit;//tv_edit
+    Button btnEdit;//tv_edit
 
     ListView list_shopping_cart;
     private ShoppingCartAdapter shoppingCartAdapter;
@@ -47,7 +49,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_shopping_cart_activity);
+        setContentView(R.layout.activity_cart);
         initView();
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -62,6 +64,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
 
         ImageLoader imageLoader=ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+
     }
 
     private void initView() {
@@ -69,7 +72,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         ckAll= (CheckBox) findViewById(R.id.ck_all);
         tvShowPrice= (TextView) findViewById(R.id.tv_show_price);
         tvSettlement= (TextView) findViewById(R.id.tv_settlement);
-        btnEdit= (TextView) findViewById(R.id.bt_header_right);
+        btnEdit= (Button) findViewById(R.id.bt_header_right);
         list_shopping_cart= (ListView) findViewById(R.id.list_shopping_cart);
 
         btnEdit.setOnClickListener(this);
@@ -88,6 +91,11 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         shoppingCartAdapter.setModifyCountInterface(this);
         list_shopping_cart.setAdapter(shoppingCartAdapter);
         shoppingCartAdapter.setShoppingCartBeanList(shoppingCartBeanList);
+    }
+    @Override
+    public void onBackPressed(){
+        Intent intent=new Intent(ShoppingCartActivity.this,MainActivity.class);
+        startActivity(intent);
     }
     @Override
     public void onClick(View v) {
@@ -142,7 +150,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
                 int size = bean.getDressSize();
                 String attribute = bean.getAttribute();
                 int id = bean.getId();
-                ToastUtil.showL(this,"总价："+id);
+                ToastUtil.showL(this,"Total："+id);
                 Log.d(TAG,id+"----id---"+shoppingName+"---"+count+"---"+price+"--size----"+size+"--attr---"+attribute);
             }
         }
@@ -193,8 +201,8 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
                 totalPrice += shoppingCartBean.getPrice() * shoppingCartBean.getCount();
             }
         }
-        tvShowPrice.setText("合计:" + totalPrice);
-        tvSettlement.setText("结算(" + totalCount + ")");
+        tvShowPrice.setText("Total:" + totalPrice);
+        tvSettlement.setText("Pay(" + totalCount + ")");
     }
     /**
      * 增加
@@ -208,6 +216,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         int currentCount = shoppingCartBean.getCount();
         currentCount++;
         shoppingCartBean.setCount(currentCount);
+        sharedPreference.editShoppingCart(this,position,currentCount);
         ((TextView) showCountView).setText(currentCount + "");
         shoppingCartAdapter.notifyDataSetChanged();
         statistics();
@@ -228,6 +237,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         }
         currentCount--;
         shoppingCartBean.setCount(currentCount);
+        sharedPreference.editShoppingCart(this,position,currentCount);
         ((TextView) showCountView).setText(currentCount + "");
         shoppingCartAdapter.notifyDataSetChanged();
         statistics();
@@ -240,6 +250,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void childDelete(int position) {
         shoppingCartBeanList.remove(position);
+        sharedPreference.removeShoppingCart(this,position);
         shoppingCartAdapter.notifyDataSetChanged();
         statistics();
     }

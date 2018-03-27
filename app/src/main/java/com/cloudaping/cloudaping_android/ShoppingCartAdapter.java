@@ -150,7 +150,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                sharedPreference.removeShoppingCart(context,position);
+
                                 modifyCountInterface.childDelete(position);//删除 目前只是从item中移除
 
                             }

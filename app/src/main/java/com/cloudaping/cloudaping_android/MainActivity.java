@@ -38,6 +38,7 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import q.rorbin.badgeview.QBadgeView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity
     private GridLayoutManager gridLayoutManagerPopular,gridLayoutManagerRecommend,gridLayoutManagerNew;
     private CustomAdapter adapterPopular,adapterRecommend,adapterNew;
     private List<MyData> data_listPopular,data_listRecommend,data_listNew;
-    private ArrayList<ShoppingCartBean> list=new ArrayList<>();
+    private ArrayList<ShoppingCartBean> shoppingCartBeanList = new ArrayList<>();
+    private SharedPreference sharedPreference =new SharedPreference();
     public static final String EXTRA_MESSAGE ="com.cloudaping.cloudaping_android.extra.MESSAGE";
     private Session session;
     @Override
@@ -56,6 +58,23 @@ public class MainActivity extends AppCompatActivity
         //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //FloatingActionButton
+        shoppingCartBeanList=sharedPreference.getShoppingCart(this);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (shoppingCartBeanList.size()==0){
+                fab.setVisibility(View.INVISIBLE);
+        }else{
+            fab.setVisibility(View.VISIBLE);
+        }
+        new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,ShoppingCartActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //session
         session = new Session(this);
@@ -272,16 +291,10 @@ public class MainActivity extends AppCompatActivity
         button1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(MainActivity.this, ShoppingCartActivity.class);
-//                ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
-//                shoppingCartBean.setShoppingName("瑞士正品夜光男女士手表情侣精钢带男表防水石英学生非天王星机械");
-//                shoppingCartBean.setAttribute("黑白色");
-//                shoppingCartBean.setPrice(89);
-//                shoppingCartBean.setId(2);
-//                shoppingCartBean.setCount(3);
-//                shoppingCartBean.setImageUrl("https://gd1.alicdn.com/imgextra/i1/2160089910/TB2M_NSbB0kpuFjSsppXXcGTXXa_!!2160089910.jpg");
-//                list.add(shoppingCartBean);
-                startActivity(intent);
+                        Intent intent = new Intent(MainActivity.this, ProductActivity.class);
+
+                        intent.putExtra(EXTRA_MESSAGE, "laptop");
+                        startActivity(intent);
             }
         });
         ImageButton button2=(ImageButton) findViewById(R.id.btn_mobile);

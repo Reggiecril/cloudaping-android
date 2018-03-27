@@ -28,17 +28,17 @@
                 android:textColor="@color/colorOrigin"
                 android:id="@+id/cloudaping"
                 android:textSize="24sp" />
-            <TextView
+            <Button
                 android:id="@+id/bt_header_right"
-                android:layout_width="50dip"
+                android:layout_width="80dp"
                 android:layout_height="50dp"
                 android:layout_gravity="right"
-                android:layout_marginRight="8dp"
-                android:background="@null"
+                android:layout_marginRight="1dp"
+                android:background="@color/colorOrigin"
                 android:gravity="center"
                 android:text="Edit"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="@color/white_c"
+                android:textSize="16sp" />
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 

@@ -52,9 +52,16 @@ public class SharedPreference {
         ArrayList<ShoppingCartBean> carts = getShoppingCart(context);
         if (carts != null) {
             carts.remove(index);
-            String i=Integer.toString(carts.size());
+            saveShoppingCart(context, carts);
+        }else{
+            ToastUtil.showL(context,"sssss");
+        }
+    }
 
-            ToastUtil.showL(context,i);
+    public void editShoppingCart(Context context, int index,int count) {
+        ArrayList<ShoppingCartBean> carts = getShoppingCart(context);
+        if (carts != null) {
+            carts.get(index).setCount(count);
             saveShoppingCart(context, carts);
         }else{
             ToastUtil.showL(context,"sssss");

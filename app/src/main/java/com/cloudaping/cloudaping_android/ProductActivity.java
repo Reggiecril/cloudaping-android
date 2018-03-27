@@ -39,6 +39,7 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import q.rorbin.badgeview.QBadgeView;
 
 public class ProductActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +47,8 @@ public class ProductActivity extends AppCompatActivity
     private GridLayoutManager gridLayoutManager;
     private CustomAdapter adapter;
     private List<MyData> data_list;
+    private ArrayList<ShoppingCartBean> shoppingCartBeanList = new ArrayList<>();
+    private SharedPreference sharedPreference =new SharedPreference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +67,19 @@ public class ProductActivity extends AppCompatActivity
 
 
         //FloatingActionButton
+        shoppingCartBeanList=sharedPreference.getShoppingCart(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (shoppingCartBeanList.size()==0){
+            fab.setVisibility(View.INVISIBLE);
+        }else{
+            fab.setVisibility(View.VISIBLE);
+        }
+        new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent=new Intent(ProductActivity.this,ShoppingCartActivity.class);
+                startActivity(intent);
             }
         });
 
