@@ -30,6 +30,7 @@ public class LoginActivity extends AppCompatActivity  {
     Button register;
     private Session session;//global variable
     public static final String EXTRA_MESSAGE ="com.cloudaping.cloudaping_android.extra.MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +139,7 @@ public class LoginActivity extends AppCompatActivity  {
                 Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
             }else{
                 session.setCustomerID(result);
-                Intent intent = new Intent(LoginActivity.this, ItemActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 
                 intent.putExtra(EXTRA_MESSAGE, result);
                 startActivity(intent);

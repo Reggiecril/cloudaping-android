@@ -1,5 +1,6 @@
 package com.cloudaping.cloudaping_android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +27,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +57,8 @@ public class MainActivity extends AppCompatActivity
     private SharedPreference sharedPreference =new SharedPreference();
     public static final String EXTRA_MESSAGE ="com.cloudaping.cloudaping_android.extra.MESSAGE";
     private Session session;
+    private TextView txt_name,txt_email;
+    private RequestQueue mQueue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         //session
         session = new Session(this);
         String string_session=session.getCustomerID();
-        Toast.makeText(this, string_session, Toast.LENGTH_SHORT).show();
+
         //Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -91,8 +99,16 @@ public class MainActivity extends AppCompatActivity
             View header = getLayoutInflater().inflate(R.layout.nav_header_main,navigationView,false);
             navigationView.addHeaderView(header);
         }else{
+
             View header = getLayoutInflater().inflate(R.layout.loggedin_nav_header,navigationView,false);
+
             navigationView.addHeaderView(header);
+            txt_name=(TextView)header.findViewById(R.id.txtLoggedUsername);
+                    //findViewById(R.id.txtLoggedUsername);
+            txt_email=(TextView)header.findViewById(R.id.txtLoggedEmail);
+            //get data from sever
+            mQueue = Volley.newRequestQueue(this);
+            jsonParse(string_session);
         }
 
 
@@ -146,7 +162,38 @@ public class MainActivity extends AppCompatActivity
         recyclerViewNew.setAdapter(adapterNew);
 
     }
+    private void jsonParse(String id) {
 
+        String url = "http://cloudaping.com/android/androidProfile.php?id="+id;
+
+        final JsonObjectRequest request = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("customer");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+
+                                JSONObject object = jsonArray.getJSONObject(i);
+//                              data = new MyData(object.getInt("product_id"), object.getString("product_name"),object.getString("product_mainImage"), object.getString("product_type"),object.getString("product_originPrice"), object.getString("product_quantity"), object.getString("product_category"), object.getString("product_trader_id"),object.getString("product_updateDate"),object.getString("product_sell"), object.getString("product_nowPrice"));
+                                txt_name.setText(object.getString("customer_firstname")+" "+object.getString("customer_lastname"));
+                                txt_email.setText(object.getString("customer_email"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request);
+
+    }
     /**
      * get data from website
      * @param id
@@ -272,6 +319,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
     //to login activity
     public void ToLogin(View view){
         Intent intent=new Intent(MainActivity.this,LoginActivity.class);
@@ -403,7 +451,15 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_account) {
-
+            session=new Session(this);
+            String message=session.getCustomerID();
+            if (message.isEmpty()){
+                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_order) {
 
         } else if (id == R.id.nav_payments) {

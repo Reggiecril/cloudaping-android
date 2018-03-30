@@ -11,6 +11,7 @@ public class ShoppingCartBean implements Serializable
     {
 
         private int id;
+        private String customerID;
         private String imageUrl;
         private String shoppingName;
 
@@ -35,8 +36,9 @@ public class ShoppingCartBean implements Serializable
 
     public ShoppingCartBean() {
     }
-    public ShoppingCartBean(int id, String shoppingName, String attribute, int dressSize,
+    public ShoppingCartBean(String customerID,int id, String shoppingName, String attribute, int dressSize,
                             double price, int count) {
+        this.customerID=customerID;
         this.id = id;
         this.shoppingName = shoppingName;
         this.attribute = attribute;
@@ -49,7 +51,13 @@ public class ShoppingCartBean implements Serializable
     public int getCount() {
         return count;
     }
+        public String getCustomerID() {
+            return customerID;
+        }
 
+        public void setCustomerID(String customerID) {
+            this.customerID = customerID;
+        }
     public void setCount(int count) {
         this.count = count;
     }

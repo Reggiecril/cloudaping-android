@@ -63,8 +63,9 @@ public class ItemActivity extends AppCompatActivity {
     private  Spinner spinner;
     private ArrayList<ShoppingCartBean> shoppingCartBeanList = new ArrayList<>();
     private SharedPreference sharedPreference =new SharedPreference();
+    private Session session;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
@@ -138,6 +139,8 @@ public class ItemActivity extends AppCompatActivity {
 
                                         JSONObject object = jsonArray.getJSONObject(i);
                                         ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
+                                        session=new Session(ItemActivity.this);
+                                        shoppingCartBean.setCustomerID(session.getCustomerID());
                                         shoppingCartBean.setShoppingName(object.getString("product_name"));
                                         shoppingCartBean.setAttribute("");
                                         Double price=Double.valueOf(object.getString("product_nowPrice"));

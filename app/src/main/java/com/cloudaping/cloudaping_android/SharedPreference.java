@@ -18,7 +18,7 @@ public class SharedPreference {
 
     public static final String PREFS_NAME = "PRODUCT_APP";
     public static final String CART = "Shopping_Cart";
-
+    Session session;
     public SharedPreference() {
         super();
     }
@@ -70,19 +70,22 @@ public class SharedPreference {
 
     public ArrayList<ShoppingCartBean> getShoppingCart(Context context) {
         SharedPreferences settings;
-        List<ShoppingCartBean> carts;
+        List<ShoppingCartBean> carts=new ArrayList<ShoppingCartBean>();
+        session=new Session(context);
 
         settings = context.getSharedPreferences(PREFS_NAME,
                 Context.MODE_PRIVATE);
-
         if (settings.contains(CART)) {
             String jsonFavorites = settings.getString(CART, null);
             Gson gson = new Gson();
             ShoppingCartBean[] cartItems = gson.fromJson(jsonFavorites,
                     ShoppingCartBean[].class);
 
-            carts = Arrays.asList(cartItems);
-            carts = new ArrayList<ShoppingCartBean>(carts);
+            for (ShoppingCartBean cart:cartItems){
+                if (cart.getCustomerID().equals(session.getCustomerID())){
+                    carts.add(cart);
+                }
+            }
         } else
             return null;
 
