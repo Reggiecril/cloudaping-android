@@ -463,7 +463,15 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_order) {
 
         } else if (id == R.id.nav_payments) {
-
+            session=new Session(this);
+            String message=session.getCustomerID();
+            if (message.isEmpty()){
+                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(MainActivity.this, PaymentActivity.class);
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_favourite) {
 
         } else if (id == R.id.nav_resetPassword) {
