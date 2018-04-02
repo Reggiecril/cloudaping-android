@@ -495,6 +495,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_contactUs) {
 
+                Intent intent = new Intent(MainActivity.this, ContactUsActivity.class);
+                startActivity(intent);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_main_layout);
