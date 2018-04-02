@@ -70,12 +70,18 @@ public class MainActivity extends AppCompatActivity
         //FloatingActionButton
         shoppingCartBeanList=sharedPreference.getShoppingCart(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (shoppingCartBeanList.size()==0){
+        if (shoppingCartBeanList!=null) {
+            if (shoppingCartBeanList.size() == 0) {
+
                 fab.setVisibility(View.INVISIBLE);
-        }else{
+                new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
+            } else {
+                fab.setVisibility(View.VISIBLE);
+            }
+        } else {
             fab.setVisibility(View.VISIBLE);
         }
-        new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -475,7 +481,16 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_favourite) {
 
         } else if (id == R.id.nav_resetPassword) {
-
+            session=new Session(this);
+            String message=session.getCustomerID();
+            if (message.isEmpty()){
+                Intent intent=new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }else {
+                Intent intent = new Intent(MainActivity.this, ResetPasswordActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, message);
+                startActivity(intent);
+            }
         } else if (id == R.id.nav_aboutUs) {
 
         } else if (id == R.id.nav_contactUs) {

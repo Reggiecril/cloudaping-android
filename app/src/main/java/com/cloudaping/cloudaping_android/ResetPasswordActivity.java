@@ -3,9 +3,11 @@ package com.cloudaping.cloudaping_android;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,24 +24,27 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class ResetPasswordActivity extends AppCompatActivity {
-    private TextView email,password,confirmPassword;
+    private TextView oldPassword,password,confirmPassword;
     private Button reset;
+    public static final String EXTRA_MESSAGE ="com.cloudaping.cloudaping_android.extra.MESSAGE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
-        email=(TextView)findViewById(R.id.txtEmail);
+        oldPassword=(TextView)findViewById(R.id.txtOldPassword);
         password=(TextView)findViewById(R.id.txtPassword);
         confirmPassword=(TextView)findViewById(R.id.txtConfirmPassword);
         reset=(Button)findViewById(R.id.btnReset);
     }
-    public void OnReset(){
-        String str_email = email.getText().toString();
+    public void OnReset(View view){
+        String str_oldPassword = oldPassword.getText().toString();
         String str_password = confirmPassword.getText().toString();
         String str_confirmPassword = confirmPassword.getText().toString();
-        String type = "register";
         ResetPasswordActivity.BackgroundWorker backgroundWorker = new ResetPasswordActivity.BackgroundWorker(this);
-        backgroundWorker.execute(type,str_email,str_password,str_confirmPassword);
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        backgroundWorker.execute(str_oldPassword,str_password,message);
     }
     public class BackgroundWorker extends AsyncTask<String,Void,String> {
         Context context;
@@ -51,14 +56,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            String type = params[0];
-            String login_url = "http://cloudaping.com/android/androidRegister.php";
-            if (type.equals("register")) {
+            String login_url = "http://cloudaping.com/android/androidResetPassword.php";
                 try {
-                    String firstName = params[1];
-                    String lastName = params[2];
-                    String email = params[3];
-                    String password = params[4];
+                    String oldPassword = params[0];
+                    String password = params[1];
+                    String id=params[2];
                     URL url = new URL(login_url);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                     httpURLConnection.setRequestMethod("POST");
@@ -66,10 +68,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     httpURLConnection.setDoInput(true);
                     OutputStream outputStream = httpURLConnection.getOutputStream();
                     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                    String post_data = URLEncoder.encode("firstName", "UTF-8") + "=" + URLEncoder.encode(firstName, "UTF-8") + "&"
-                            + URLEncoder.encode("lastName", "UTF-8") + "=" + URLEncoder.encode(lastName, "UTF-8")+ "&"
-                            + URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8")+ "&"
-                            + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+                    String post_data = URLEncoder.encode("old_password", "UTF-8") + "=" + URLEncoder.encode(oldPassword, "UTF-8") + "&"
+                            + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8") + "&"
+                            + URLEncoder.encode("id", "UTF-8") + "=" + URLEncoder.encode(id, "UTF-8");
                     bufferedWriter.write(post_data);
                     bufferedWriter.flush();
                     bufferedWriter.close();
@@ -90,7 +91,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+
             return null;
         }
 
