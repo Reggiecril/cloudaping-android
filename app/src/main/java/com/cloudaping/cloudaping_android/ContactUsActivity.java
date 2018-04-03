@@ -37,7 +37,6 @@ public class ContactUsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendEmail();
-
             }
         });
     }
