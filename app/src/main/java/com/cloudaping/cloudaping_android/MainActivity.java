@@ -72,14 +72,14 @@ public class MainActivity extends AppCompatActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (shoppingCartBeanList!=null) {
             if (shoppingCartBeanList.size() == 0) {
-
                 fab.setVisibility(View.INVISIBLE);
-                new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
             } else {
                 fab.setVisibility(View.VISIBLE);
+                new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
+
             }
         } else {
-            fab.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.INVISIBLE);
         }
 
         fab.setOnClickListener(new View.OnClickListener() {

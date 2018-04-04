@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener
         , ShoppingCartAdapter.CheckInterface, ShoppingCartAdapter.ModifyCountInterface {
     private static final String TAG = "ShoppingCartActivity";
+    public static final String shop ="";
     Button btnBack;
    //全选
     CheckBox ckAll;

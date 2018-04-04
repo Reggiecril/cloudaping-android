@@ -3,6 +3,7 @@ package com.cloudaping.cloudaping_android;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class ShoppingCartAdapter extends BaseAdapter {
     private CheckInterface checkInterface;
     private ModifyCountInterface modifyCountInterface;
     private Context context;
+    public static final String shop="";
+
     SharedPreference sharedPreference=new SharedPreference();
 
     public ShoppingCartAdapter(Context context) {
@@ -108,6 +111,16 @@ public class ShoppingCartAdapter extends BaseAdapter {
         holder.tvCommodityNum.setText(" X"+shoppingCartBean.getCount()+"");
         holder.tvCommodityShowNum.setText(shoppingCartBean.getCount()+"");
         ImageLoader.getInstance().displayImage(shoppingCartBean.getImageUrl(),holder.ivShowPic);
+        //title
+        holder.tvCommodityName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context,ItemActivity.class);
+                String message=Integer.toString(shoppingCartBean.getId());
+                intent.putExtra(shop, message);
+                context.startActivity(intent);
+            }
+        });
         //单选框按钮
         holder.ckOneChose.setOnClickListener(
                 new View.OnClickListener() {

@@ -69,12 +69,17 @@ public class ProductActivity extends AppCompatActivity
         //FloatingActionButton
         shoppingCartBeanList=sharedPreference.getShoppingCart(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (shoppingCartBeanList.size()==0){
+        if (shoppingCartBeanList!=null) {
+            if (shoppingCartBeanList.size() == 0) {
+                fab.setVisibility(View.INVISIBLE);
+            } else {
+                fab.setVisibility(View.VISIBLE);
+                new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
+
+            }
+        } else {
             fab.setVisibility(View.INVISIBLE);
-        }else{
-            fab.setVisibility(View.VISIBLE);
         }
-        new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

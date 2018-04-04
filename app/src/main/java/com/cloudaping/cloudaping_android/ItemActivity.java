@@ -83,12 +83,17 @@ public class ItemActivity extends AppCompatActivity {
         //FloatingActionButton
         shoppingCartBeanList=sharedPreference.getShoppingCart(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (shoppingCartBeanList.size()==0){
+        if (shoppingCartBeanList!=null) {
+            if (shoppingCartBeanList.size() == 0) {
+                fab.setVisibility(View.INVISIBLE);
+            } else {
+                fab.setVisibility(View.VISIBLE);
+                new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
+
+            }
+        } else {
             fab.setVisibility(View.INVISIBLE);
-        }else{
-            fab.setVisibility(View.VISIBLE);
         }
-        new QBadgeView(this).bindTarget(fab).setBadgeNumber(shoppingCartBeanList.size());
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,13 +107,20 @@ public class ItemActivity extends AppCompatActivity {
         originPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
         review=(TextView)findViewById(R.id.txt_item_review_count);
         name=(TextView)findViewById(R.id.txt_item_name);
-        //receive message from other activity
-        Intent intent = getIntent();
-        final String message = intent.getStringExtra(CustomAdapter.EXTRA_MESSAGE);
 
 
         //get data from sever
         mQueue = Volley.newRequestQueue(this);
+        //receive message from other activity
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(CustomAdapter.EXTRA_MESSAGE);
+
+
+        String shopping_message=intent.getStringExtra(ShoppingCartAdapter.shop);
+        ToastUtil.showL(this,shopping_message);
+        if (shopping_message!=null){
+            message=shopping_message;
+        }
         jsonParse(message);
         //ViewPager
         imageView = (ImageView)findViewById(R.id.imageView_item);
@@ -125,6 +137,12 @@ public class ItemActivity extends AppCompatActivity {
         btn_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = getIntent();
+                String message = intent.getStringExtra(CustomAdapter.EXTRA_MESSAGE);
+                String shopping_message=intent.getStringExtra(ShoppingCartAdapter.shop);
+                if (shopping_message!=null){
+                    message=shopping_message;
+                }
                 RequestQueue cart_Queue=Volley.newRequestQueue(ItemActivity.this);
                 String url = "http://cloudaping.com/android/androidItem.php?id="+Integer.valueOf(message);
 
@@ -145,8 +163,7 @@ public class ItemActivity extends AppCompatActivity {
                                         shoppingCartBean.setAttribute("");
                                         Double price=Double.valueOf(object.getString("product_nowPrice"));
                                         shoppingCartBean.setPrice(price);
-                                        int id=Integer.valueOf(message);
-                                        shoppingCartBean.setId(id);
+                                        shoppingCartBean.setId(object.getInt("product_id"));
                                         int count=Integer.valueOf(spinner.getSelectedItem().toString());
                                         shoppingCartBean.setCount(count);
                                         String imageUrl="http://cloudaping.com/assets/images/"+object.getString("product_mainImage");
