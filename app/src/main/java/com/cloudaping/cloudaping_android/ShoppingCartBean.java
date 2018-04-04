@@ -36,6 +36,12 @@ public class ShoppingCartBean implements Serializable
 
     public ShoppingCartBean() {
     }
+        public ShoppingCartBean(int id,String imageUrl,String shoppingName,double price) {
+            this.id = id;
+            this.shoppingName = shoppingName;
+            this.imageUrl=imageUrl;
+            this.price = price;
+        }
     public ShoppingCartBean(String customerID,int id, String shoppingName, String attribute, int dressSize,
                             double price, int count) {
         this.customerID=customerID;

@@ -9,6 +9,16 @@
     xmlns:card_view="http://schemas.android.com/tools"
     tools:showIn="@layout/app_bar_item">
 
+    <Button
+        android:id="@+id/txt_item_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="#11000000"
+        android:text="Add\nTo\nFavourite"
+        android:textColor="@color/colorOrigin" />
     <include
         android:id="@+id/include2"
         layout="@layout/viewpager_item"

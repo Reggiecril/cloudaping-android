@@ -117,9 +117,11 @@ public class ItemActivity extends AppCompatActivity {
 
 
         String shopping_message=intent.getStringExtra(ShoppingCartAdapter.shop);
-        ToastUtil.showL(this,shopping_message);
+        String favourite_message=intent.getStringExtra(FavouriteAdapter.favourite);
         if (shopping_message!=null){
             message=shopping_message;
+        }else if(favourite_message!=null){
+            message=favourite_message;
         }
         jsonParse(message);
         //ViewPager
@@ -140,8 +142,11 @@ public class ItemActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 String message = intent.getStringExtra(CustomAdapter.EXTRA_MESSAGE);
                 String shopping_message=intent.getStringExtra(ShoppingCartAdapter.shop);
+                String favourite_message=intent.getStringExtra(FavouriteAdapter.favourite);
                 if (shopping_message!=null){
                     message=shopping_message;
+                }else if(favourite_message!=null){
+                    message=favourite_message;
                 }
                 RequestQueue cart_Queue=Volley.newRequestQueue(ItemActivity.this);
                 String url = "http://cloudaping.com/android/androidItem.php?id="+Integer.valueOf(message);
