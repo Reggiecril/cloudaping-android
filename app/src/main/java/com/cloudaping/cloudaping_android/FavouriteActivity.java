@@ -41,6 +41,7 @@ public class FavouriteActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         //RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
         favourite_list= new ArrayList<>();

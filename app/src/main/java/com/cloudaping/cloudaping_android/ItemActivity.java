@@ -118,10 +118,14 @@ public class ItemActivity extends AppCompatActivity {
 
         String shopping_message=intent.getStringExtra(ShoppingCartAdapter.shop);
         String favourite_message=intent.getStringExtra(FavouriteAdapter.favourite);
+        String order_message=intent.getStringExtra(OrderAdapter.order);
+
         if (shopping_message!=null){
             message=shopping_message;
         }else if(favourite_message!=null){
             message=favourite_message;
+        }else if(order_message!=null){
+            message=order_message;
         }
         jsonParse(message);
         //ViewPager

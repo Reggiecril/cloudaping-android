@@ -7,10 +7,33 @@ package com.cloudaping.cloudaping_android;
 public class MyData {
 
     private int id;
-    private String description,image_link,productType,originPrice,quantity,category,traderID,updateDate,sell,price;
+    private String description;
+    private String image_link;
+    private String productType;
+    private String originPrice;
+    private String quantity;
+    private String category;
+    private String traderID;
+    private String updateDate;
+    private String sell;
+    private String price;
+    private String total;
+    private String traderName;
 public MyData(){
 
 }
+public MyData(int id,String description,String image_link,String productType,String price,String originPrice,String quantity,String traderName,String total){
+    this.id = id;
+    this.description = description;
+    this.image_link = image_link;
+    this.price=price;
+    this.productType = productType;
+    this.originPrice = originPrice;
+    this.quantity = quantity;
+    this.traderName=traderName;
+    this.total=total;
+}
+
     public MyData(int id, String description,String image_link,String productType,String originPrice,String quantity,String category,String traderID,String updateDate,String sell,String price) {
         this.id = id;
         this.description = description;
@@ -24,6 +47,20 @@ public MyData(){
         this.updateDate = updateDate;
         this.sell = sell;
         this.price=price;
+    }
+    public String getTraderName() {
+        return traderName;
+    }
+
+    public void setTraderName(String traderName) {
+        this.traderName = traderName;
+    }
+    public String getTotal() {
+        return "£"+total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 
     public int getId() {
