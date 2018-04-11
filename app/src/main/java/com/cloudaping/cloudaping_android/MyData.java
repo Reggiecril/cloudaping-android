@@ -1,10 +1,12 @@
 package com.cloudaping.cloudaping_android;
 
+import java.io.Serializable;
+
 /**
  * Created by reggie on 13/03/18.
  */
 
-public class MyData {
+public class MyData implements Serializable {
 
     private int id;
     private String description;
@@ -19,6 +21,7 @@ public class MyData {
     private String price;
     private String total;
     private String traderName;
+    private String imageName;
 public MyData(){
 
 }
@@ -48,6 +51,15 @@ public MyData(int id,String description,String image_link,String productType,Str
         this.sell = sell;
         this.price=price;
     }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
     public String getTraderName() {
         return traderName;
     }

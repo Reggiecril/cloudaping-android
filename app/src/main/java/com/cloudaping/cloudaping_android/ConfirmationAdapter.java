@@ -19,13 +19,13 @@ import java.util.List;
  * Created by reggie on 04/04/18.
  */
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
+public class ConfirmationAdapter extends RecyclerView.Adapter<ConfirmationAdapter.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";
     private Context context;
     private List<MyData> my_data;
     public static final String order = "com.cloudaping.cloudaping_android.extra.MESSAGE";
 
-    public OrderAdapter(Context context, List<MyData> my_data) {
+    public ConfirmationAdapter(Context context, List<MyData> my_data) {
         this.context = context;
         this.my_data = my_data;
     }
@@ -33,7 +33,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_card,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.confirmation_card,parent,false);
 
         return new ViewHolder(itemView);
     }
@@ -41,13 +41,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder,final int position) {
         final String id=Integer.toString(my_data.get(position).getId());
-        holder.storeName.setText(my_data.get(position).getTraderName());
         holder.productName.setText(my_data.get(position).getDescription());
         holder.productType.setText(my_data.get(position).getProductType());
         holder.productNowPrice.setText(my_data.get(position).getPrice());
         holder.productOriginPrice.setText(my_data.get(position).getOriginPrice());
         holder.productQuantity.setText("X"+my_data.get(position).getQuantity());
-        Glide.with(context).load(my_data.get(position).getImage_link()).into(holder.productImage);
+        Glide.with(context).load(my_data.get(position).getImageName()).into(holder.productImage);
         holder.total.setText(my_data.get(position).getQuantity()+"items"+"  "+"Total:"+my_data.get(position).getTotal());
         holder.productImage.setOnClickListener(new View.OnClickListener() {
             @Override

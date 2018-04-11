@@ -17,14 +17,40 @@ public class ShoppingCartBean implements Serializable
 
         private int dressSize;
         private String attribute;
+        private String type;
 
+        public String getType() {
+            return type;
+        }
+
+
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getOriginPrice() {
+            return originPrice;
+        }
+
+        public void setOriginPrice(String originPrice) {
+            this.originPrice = originPrice;
+        }
+        private String traderName;
+        private String originPrice;
         private double price;
 
         public boolean isChoosed;
         public boolean isCheck = false;
         private int count;
 
+        public String getTraderName() {
+            return traderName;
+        }
 
+        public void setTraderName(String traderName) {
+            this.traderName = traderName;
+        }
 
     public String getAttribute() {
         return attribute;

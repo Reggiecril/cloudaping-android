@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by an on 2017/6/14.
@@ -130,6 +131,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.tv_settlement: //结算
                 lementOnder();
+
                 break;
             case R.id.btn_back:
                 finish();
@@ -141,6 +143,8 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
      * 结算订单、支付
      */
     private void lementOnder() {
+        double total=0;
+        ArrayList<MyData> order=new ArrayList<MyData>();
     //选中的需要提交的商品清单
         for (ShoppingCartBean bean:shoppingCartBeanList ){
             boolean choosed = bean.isChoosed();
@@ -151,11 +155,23 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
                 int size = bean.getDressSize();
                 String attribute = bean.getAttribute();
                 int id = bean.getId();
-                ToastUtil.showL(this,"Total："+id);
-                Log.d(TAG,id+"----id---"+shoppingName+"---"+count+"---"+price+"--size----"+size+"--attr---"+attribute);
+                total+=price;
+                MyData myData=new MyData();
+                myData.setDescription(bean.getShoppingName());
+                myData.setId(bean.getId());
+                myData.setImageName(bean.getImageUrl());
+                myData.setPrice(Double.toString(bean.getPrice()));
+                myData.setOriginPrice(bean.getOriginPrice());
+                myData.setProductType(bean.getType());
+                myData.setQuantity(Integer.toString(bean.getCount()));
+                double ti=price*count;
+                myData.setTotal(Double.toString(ti));
+                order.add(myData);
             }
         }
-
+        Intent intent=new Intent(ShoppingCartActivity.this,MakePaymentActivity.class);
+        intent.putExtra("order",order);
+        startActivity(intent);
 
         //跳转到支付界面
     }
