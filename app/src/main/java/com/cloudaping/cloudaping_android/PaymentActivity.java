@@ -25,6 +25,7 @@ public class PaymentActivity extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
     private PaymentAdapter adapter;
     private List<PaymentData> payment_list;
+    private Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,8 @@ public class PaymentActivity extends AppCompatActivity {
         //RecyclerView
         recyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
         payment_list= new ArrayList<>();
-        load_data_from_server("1");
+        session=new Session(this);
+        load_data_from_server(session.getCustomerID());
         gridLayoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(gridLayoutManager);
 

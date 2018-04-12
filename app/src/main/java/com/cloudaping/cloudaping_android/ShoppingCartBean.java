@@ -39,7 +39,7 @@ public class ShoppingCartBean implements Serializable
         private String traderName;
         private String originPrice;
         private double price;
-
+        private String traderID;
         public boolean isChoosed;
         public boolean isCheck = false;
         private int count;
@@ -80,7 +80,15 @@ public class ShoppingCartBean implements Serializable
 
     }
 
-    public int getCount() {
+        public String getTraderID() {
+            return traderID;
+        }
+
+        public void setTraderID(String traderID) {
+            this.traderID = traderID;
+        }
+
+        public int getCount() {
         return count;
     }
         public String getCustomerID() {

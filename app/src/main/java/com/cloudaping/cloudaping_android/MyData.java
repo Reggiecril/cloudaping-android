@@ -84,7 +84,7 @@ public MyData(int id,String description,String image_link,String productType,Str
     }
 
     public String getPrice() {
-        return "£"+price;
+        return price;
     }
 
     public void setPrice(String price) {
@@ -116,7 +116,7 @@ public MyData(int id,String description,String image_link,String productType,Str
     }
 
     public String getOriginPrice() {
-        return "£"+originPrice;
+        return originPrice;
     }
 
     public void setOriginPrice(String originPrice) {

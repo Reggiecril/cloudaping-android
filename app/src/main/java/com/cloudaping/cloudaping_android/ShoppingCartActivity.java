@@ -151,7 +151,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
             if (choosed){
                 String shoppingName = bean.getShoppingName();
                 int count = bean.getCount();
-                double price = bean.getPrice();
+                int price = (int)bean.getPrice();
                 int size = bean.getDressSize();
                 String attribute = bean.getAttribute();
                 int id = bean.getId();
@@ -160,10 +160,11 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
                 myData.setDescription(bean.getShoppingName());
                 myData.setId(bean.getId());
                 myData.setImageName(bean.getImageUrl());
-                myData.setPrice(Double.toString(bean.getPrice()));
+                myData.setPrice(Integer.toString(price));
                 myData.setOriginPrice(bean.getOriginPrice());
                 myData.setProductType(bean.getType());
                 myData.setQuantity(Integer.toString(bean.getCount()));
+                myData.setTraderID(bean.getTraderID());
                 double ti=price*count;
                 myData.setTotal(Double.toString(ti));
                 order.add(myData);

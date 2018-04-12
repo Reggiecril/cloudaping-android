@@ -178,6 +178,7 @@ public class ItemActivity extends AppCompatActivity {
                                         String imageUrl="http://cloudaping.com/assets/images/"+object.getString("product_mainImage");
                                         shoppingCartBean.setImageUrl(imageUrl);
                                         shoppingCartBean.setType(object.getString("product_type"));
+                                        shoppingCartBean.setTraderID(object.getString("product_trader_id"));
                                         shoppingCartBean.setOriginPrice(object.getString("product_originPrice"));
                                         sharedPreference.addShoppingCart(ItemActivity.this,shoppingCartBean);
                                         Intent intent=new Intent(ItemActivity.this,ShoppingCartActivity.class);
