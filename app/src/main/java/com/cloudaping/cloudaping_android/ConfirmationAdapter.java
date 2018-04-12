@@ -43,8 +43,8 @@ public class ConfirmationAdapter extends RecyclerView.Adapter<ConfirmationAdapte
         final String id=Integer.toString(my_data.get(position).getId());
         holder.productName.setText(my_data.get(position).getDescription());
         holder.productType.setText(my_data.get(position).getProductType());
-        holder.productNowPrice.setText(my_data.get(position).getPrice());
-        holder.productOriginPrice.setText(my_data.get(position).getOriginPrice());
+        holder.productNowPrice.setText("£"+my_data.get(position).getPrice());
+        holder.productOriginPrice.setText("£"+my_data.get(position).getOriginPrice());
         holder.productQuantity.setText("X"+my_data.get(position).getQuantity());
         Glide.with(context).load(my_data.get(position).getImageName()).into(holder.productImage);
         holder.total.setText(my_data.get(position).getQuantity()+"items"+"  "+"Total:"+my_data.get(position).getTotal());

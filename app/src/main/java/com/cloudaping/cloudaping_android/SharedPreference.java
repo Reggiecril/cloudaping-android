@@ -57,7 +57,15 @@ public class SharedPreference {
             ToastUtil.showL(context,"sssss");
         }
     }
-
+    public void emptyShoppingCart(Context context) {
+        ArrayList<ShoppingCartBean> carts = getShoppingCart(context);
+        if (carts != null) {
+            carts.clear();
+            saveShoppingCart(context, carts);
+        }else{
+            ToastUtil.showL(context,"sssss");
+        }
+    }
     public void editShoppingCart(Context context, int index,int count) {
         ArrayList<ShoppingCartBean> carts = getShoppingCart(context);
         if (carts != null) {

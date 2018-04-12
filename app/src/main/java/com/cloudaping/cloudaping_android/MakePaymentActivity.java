@@ -50,6 +50,7 @@ public class MakePaymentActivity extends AppCompatActivity {
     private Session session;
     private TextView address_name,address_address,address_id,payment_id,payment;
     private Button order;
+    private SharedPreference sharedPreference=new SharedPreference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,9 @@ public class MakePaymentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 OnPlaceOrder();
+                sharedPreference.emptyShoppingCart(MakePaymentActivity.this);
+                Intent intent=new Intent(MakePaymentActivity.this,OrderActivity.class);
+                startActivity(intent);
             }
         });
         address_name=(TextView)findViewById(R.id.confirmation_address_name);

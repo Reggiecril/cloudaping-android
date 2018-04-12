@@ -48,7 +48,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder,final int position) {
         final String id=Integer.toString(my_data.get(position).getId());
         holder.name.setText(my_data.get(position).getDescription());
-        holder.price.setText(my_data.get(position).getPrice());
+        holder.price.setText("£"+my_data.get(position).getPrice());
         Glide.with(context).load(my_data.get(position).getImage_link()).into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
