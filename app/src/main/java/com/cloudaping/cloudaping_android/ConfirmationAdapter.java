@@ -2,6 +2,7 @@ package com.cloudaping.cloudaping_android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +91,7 @@ public class ConfirmationAdapter extends RecyclerView.Adapter<ConfirmationAdapte
             productType = (TextView) itemView.findViewById(R.id.product_type);
             productNowPrice = (TextView) itemView.findViewById(R.id.product_nowPrice);
             productOriginPrice = (TextView) itemView.findViewById(R.id.product_originPrice);
+            productOriginPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
             productQuantity = (TextView) itemView.findViewById(R.id.product_quantity);
             total=(TextView) itemView.findViewById(R.id.txt_total);
             delete=(Button)itemView.findViewById(R.id.btn_delete);

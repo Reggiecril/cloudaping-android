@@ -126,7 +126,6 @@ public class MakePaymentActivity extends AppCompatActivity {
     }
     public class BackgroundWorker extends AsyncTask<String,Void,String> {
         Context context;
-        AlertDialog alertDialog;
 
         BackgroundWorker(Context ctx) {
             context = ctx;
