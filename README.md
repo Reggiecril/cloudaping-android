@@ -4,7 +4,7 @@
 ## Preview
   <img src="https://github.com/Reggiecril/cloudaping-android/blob/master/ExampleImage/android%20account.png" width="350" height="600" align="left"/>
   <img src="https://github.com/Reggiecril/cloudaping-android/blob/master/ExampleImage/android%20cart.png" width="350" height="600" align="right"/>
-  \n
+  <div></div>
   <img src="https://github.com/Reggiecril/cloudaping-android/blob/master/ExampleImage/android%20confirmation.png" width="350" height="600" align="left"/>
   <img src="https://github.com/Reggiecril/cloudaping-android/blob/master/ExampleImage/android%20favurite.png" width="350" height="600"  align="right"/>
   </br>
